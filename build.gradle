@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.0.RELEASE'
+        springBootVersion = '2.0.1.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -19,6 +19,10 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+jacoco {
+    toolVersion = '0.8.1'
+}
 
 group = 'com.ioet.bpm'
 version = '0.0.1-SNAPSHOT'
@@ -33,7 +37,6 @@ ext {
 }
 
 dependencies {
-    testImplementation 'org.mockito:mockito-core:2.7.22'
     compile 'com.github.derjust:spring-data-dynamodb:5.0.3'
     compile('org.springframework.boot:spring-boot-starter-web')
     runtime('org.springframework.boot:spring-boot-devtools')
@@ -41,7 +44,7 @@ dependencies {
     compile 'io.springfox:springfox-swagger-ui:2.7.0'
     compileOnly('org.projectlombok:lombok')
     annotationProcessor 'org.projectlombok:lombok'
-    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 dependencyManagement {
@@ -49,3 +52,29 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
+
+test {
+    dependsOn 'cleanTest'
+    jacoco {
+        excludes += [
+                '**/config/**',
+                '**/BpmorganizationsapiApplication.class'
+        ]
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    jacocoTestReport {
+        afterEvaluate {
+            classDirectories = files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: ['**/config/**', '**/BpmorganizationsapiApplication.class'])
+            })
+        }
+    }
+}
+
+check.dependsOn jacocoTestReport

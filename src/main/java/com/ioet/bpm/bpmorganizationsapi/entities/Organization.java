@@ -12,8 +12,8 @@ import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
 @Data
-@DynamoDBTable(tableName = "Organization")
-public class Organization {
+@DynamoDBTable(tableName = "organizations_organization")
+public class Organization{
 
     @DynamoDBHashKey
     @Generated
@@ -23,20 +23,4 @@ public class Organization {
     @DynamoDBAttribute
     private String organizationName;
 
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public String getOrganizationName() {
-        return organizationName;
-    }
-
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
-    }
 }
