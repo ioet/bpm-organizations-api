@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value="/organizations", description="Manage Organizations", produces ="application/json")
 public class OrganizationController {
 
-    OrganizationRepository organizationRepository;
+    private final OrganizationRepository organizationRepository = null;
+
 
     @ApiOperation(value = "Return a list of all organizations", response = Organization.class, responseContainer = "List")
     @ApiResponses(value = {
