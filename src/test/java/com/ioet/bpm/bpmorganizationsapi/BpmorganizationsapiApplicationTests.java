@@ -82,5 +82,19 @@ public class BpmorganizationsapiApplicationTests {
 
     }
 
+    @Test
+    public void testEntities(){
+        organization = mock(Organization.class);
+        repository = mock(OrganizationRepository.class);
+        Organization savedOrganization;
+
+        when(repository.save(organization)).thenReturn(savedOrganization);
+        savedOrganization = repository.save(organization);
+        assertEquals(organization,savedOrganization);
+
+
+
+
+    }
 
 }
