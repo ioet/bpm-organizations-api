@@ -1,14 +1,14 @@
 package com.ioet.bpm.bpmorganizationsapi;
 
+import com.ioet.bpm.bpmorganizationsapi.boundaries.OrganizationController;
 import com.ioet.bpm.bpmorganizationsapi.entities.Organization;
 import com.ioet.bpm.bpmorganizationsapi.repositories.OrganizationRepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +23,9 @@ public class BpmorganizationsapiApplicationTests {
 
     @Mock
     OrganizationRepository repository;
+
+    @Mock
+    OrganizationController organizationController;
 
     @Test
     public void contextLoads() {
@@ -83,18 +86,29 @@ public class BpmorganizationsapiApplicationTests {
     }
 
     @Test
-    public void testEntities(){
-        organization = mock(Organization.class);
-        repository = mock(OrganizationRepository.class);
-        Organization savedOrganization;
+    public void testCreateOrganization(){
+        Organization organizationToCreate = mock(Organization.class);
+        Organization organizationCreated = mock(Organization.class);
+        Optional<Organization> organization = Optional.of(Mockito.mock(Organization.class));
 
-        when(repository.save(organization)).thenReturn(savedOrganization);
-        savedOrganization = repository.save(organization);
-        assertEquals(organization,savedOrganization);
 
+        when(organizationCreated.getUid()).thenReturn("1");
+        assertEquals("1",organizationCreated.getUid());
+
+        verify(organizationCreated, times(1)).getUid();
+    }
+
+    @Test
+    public void testOrganizationEntity(){
+        Organization newOrganization = mock(Organization.class);
+
+        when(newOrganization.getUid()).thenReturn("1");
+        when(newOrganization.getOrganizationName()).thenReturn("ioet");
+
+        assertEquals("ioet", newOrganization.getOrganizationName());
+        assertEquals("1", newOrganization.getUid() );
 
 
 
     }
-
 }

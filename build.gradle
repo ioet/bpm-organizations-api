@@ -77,17 +77,5 @@ jacocoTestReport {
     }
 }
 
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                counter = 'LINE'
-                value = 'COVEREDRATIO'
-                minimum = 0.9
-            }
-        }
-    }
-}
 
 check.dependsOn jacocoTestReport
-check.dependsOn jacocoTestCoverageVerification
