@@ -1,4 +1,4 @@
-package com.ioet.bpm.bpmorganizationsapi;
+package com.ioet.bpm.organizations;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
