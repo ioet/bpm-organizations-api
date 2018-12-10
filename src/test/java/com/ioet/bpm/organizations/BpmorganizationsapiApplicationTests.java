@@ -60,6 +60,32 @@ public class BpmorganizationsapiApplicationTests {
     }
 
     @Test
+    public void getOrganizationResponseOK(){
+
+        String organizationIdToFind = "id";
+        Organization organizationFound = mock(Organization.class);
+        when(organizationRepository.findById(organizationIdToFind)).thenReturn(Optional.of(organizationFound));
+
+        ResponseEntity<Organization> existingOrganizationResponse = organizationController.getOrganization(organizationIdToFind);
+
+        assertEquals(organizationFound, existingOrganizationResponse.getBody());
+        assertEquals(HttpStatus.OK, existingOrganizationResponse.getStatusCode());
+    }
+
+    @Test
+    public void getOrganizationResponseNotFound(){
+
+        String organizationIdToFind = "id";
+        Organization organizationFound = mock(Organization.class);
+        when(organizationRepository.findById(organizationIdToFind)).thenReturn(Optional.of(organizationFound));
+
+        ResponseEntity<Organization> existingOrganizationResponse = organizationController.getOrganization(organizationIdToFind);
+
+        assertEquals(organizationFound, existingOrganizationResponse.getBody());
+        assertEquals(HttpStatus.OK, existingOrganizationResponse.getStatusCode());
+    }
+
+    @Test
     public void deleteOrganizationByIdSucceded(){
         Optional<Organization> organizationFound = Optional.of(mock(Organization.class));
 
@@ -72,8 +98,44 @@ public class BpmorganizationsapiApplicationTests {
 
     }
 
+    @Test
+    public void deleteOrganizationByIdNotFound(){
+        Optional<Organization> organizationFound = Optional.of(mock(Organization.class));
+
+        ResponseEntity<?> deletedOrganizationResponse = organizationController.deleteOrganization(Mockito.anyString());
+
+        assertEquals(HttpStatus.NOT_FOUND, deletedOrganizationResponse.getStatusCode());
+
+        verify(organizationRepository,times(1)).findById(Mockito.anyString());
+
+    }
 
 
 
+    @Test
+    public void updateOrganizationSucceded(){
 
+        Optional<Organization> organizationFound = Optional.of(mock(Organization.class));
+        Organization organizationToUpdate = mock(Organization.class);
+
+        when(organizationRepository.findById(Mockito.anyString())).thenReturn(organizationFound);
+        ResponseEntity<?> updatedOrganizationResponse = organizationController.updateOrganization(Mockito.anyString(), organizationToUpdate);
+
+        assertEquals(HttpStatus.OK, updatedOrganizationResponse.getStatusCode());
+
+        verify(organizationRepository,times(1)).findById(Mockito.anyString());
+    }
+
+    @Test
+    public void updateOrganizationNotFound(){
+
+        Optional<Organization> organizationFound = Optional.of(mock(Organization.class));
+        Organization organizationToUpdate = mock(Organization.class);
+
+        ResponseEntity<?> updatedOrganizationResponse = organizationController.updateOrganization(Mockito.anyString(), organizationToUpdate);
+
+        assertEquals(HttpStatus.NOT_FOUND, updatedOrganizationResponse.getStatusCode());
+
+        verify(organizationRepository,times(1)).findById(Mockito.anyString());
+    }
 }
