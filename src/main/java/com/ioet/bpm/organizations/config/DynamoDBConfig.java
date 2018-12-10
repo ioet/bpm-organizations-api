@@ -8,7 +8,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.util.TableUtils;
-import com.ioet.bpm.organizations.entities.Organization;
+import com.ioet.bpm.organizations.domain.Organization;
 import lombok.extern.slf4j.Slf4j;
 import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 import org.springframework.beans.factory.InitializingBean;
@@ -42,7 +42,6 @@ public class DynamoDBConfig {
         return () -> {
             DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB);
 
-            // Alternatively, you can scan your model package for the DynamoDBTable annotation
             List<Class> modelClasses = new ArrayList<>();
             modelClasses.add(Organization.class);
 

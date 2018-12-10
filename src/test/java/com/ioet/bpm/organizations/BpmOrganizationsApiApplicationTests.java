@@ -1,7 +1,7 @@
 package com.ioet.bpm.organizations;
 
 import com.ioet.bpm.organizations.boundaries.OrganizationController;
-import com.ioet.bpm.organizations.entities.Organization;
+import com.ioet.bpm.organizations.domain.Organization;
 import com.ioet.bpm.organizations.repositories.OrganizationRepository;
 
 import org.junit.Test;
@@ -13,28 +13,23 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BpmorganizationsapiApplicationTests {
+public class BpmOrganizationsApiApplicationTests {
 
     @Mock
-    Organization organization;
-
-    @Mock
-    OrganizationRepository organizationRepository;
+    private OrganizationRepository organizationRepository;
 
     @InjectMocks
-    OrganizationController organizationController;
+    private OrganizationController organizationController;
 
 
     @Test
-    public void createOrganizationResponseSuccess(){
+    public void createOrganizationResponseSuccess() {
         Organization organizationCreated = mock(Organization.class);
         Organization organizationToCreate = mock(Organization.class);
 
@@ -45,7 +40,6 @@ public class BpmorganizationsapiApplicationTests {
         ResponseEntity<?> organizationResponse= organizationController.createOrganization(organizationCreated);
 
         assertEquals(HttpStatus.CREATED, organizationResponse.getStatusCode());
-
     }
 
 

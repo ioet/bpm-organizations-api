@@ -1,7 +1,6 @@
 package com.ioet.bpm.organizations.boundaries;
 
-
-import com.ioet.bpm.organizations.entities.Organization;
+import com.ioet.bpm.organizations.domain.Organization;
 import com.ioet.bpm.organizations.repositories.OrganizationRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,7 +9,6 @@ import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,7 +17,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/organizations")
-@Api(value="/organizations", description="Manage Organizations", produces ="application/json")
+@Api(value = "/organizations", description = "Manage Organizations", produces = "application/json")
 public class OrganizationController {
 
     private final OrganizationRepository organizationRepository;
@@ -39,8 +37,8 @@ public class OrganizationController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Organization returned")
     })
-    @GetMapping(path = "/{id}" , produces = "application/json")
-    public ResponseEntity<Organization> getOrganization(@PathVariable(value = "id") String organizationId){
+    @GetMapping(path = "/{id}", produces = "application/json")
+    public ResponseEntity<Organization> getOrganization(@PathVariable(value = "id") String organizationId) {
         Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
         return organizationOptional.map(
                 organization -> new ResponseEntity<>(organization, HttpStatus.OK))
@@ -53,21 +51,21 @@ public class OrganizationController {
             @ApiResponse(code = 201, message = "Organization successfully created ")
     })
     @PostMapping(produces = "application/json")
-    public ResponseEntity<Organization> createOrganization (@RequestBody Organization organization){
+    public ResponseEntity<Organization> createOrganization(@Valid @RequestBody Organization organization) {
         Organization organizationCreated = organizationRepository.save(organization);
-        return new ResponseEntity<>( organizationCreated, HttpStatus.CREATED);
+        return new ResponseEntity<>(organizationCreated, HttpStatus.CREATED);
     }
 
 
-    @ApiOperation(value= "Delete an organization")
+    @ApiOperation(value = "Delete an organization")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Organization successfully deleted"),
+            @ApiResponse(code = 204, message = "Organization successfully deleted"),
             @ApiResponse(code = 404, message = "Organization to delete not found")
     })
-    @DeleteMapping(path="/{id}", produces = "application/json")
-    public ResponseEntity<Organization> deleteOrganization(@PathVariable(value= "id") String organizationId ){
+    @DeleteMapping(path = "/{id}", produces = "application/json")
+    public ResponseEntity<Organization> deleteOrganization(@PathVariable(value = "id") String organizationId) {
         Optional<Organization> foundOrganization = organizationRepository.findById(organizationId);
-        if (foundOrganization.isPresent()){
+        if (foundOrganization.isPresent()) {
             organizationRepository.delete(foundOrganization.get());
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -75,15 +73,15 @@ public class OrganizationController {
     }
 
     @ApiOperation(value = "Update an Organization")
-    @ApiResponses(value={
-            @ApiResponse(code = 200, message = "Organization sucessfully updated"),
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Organization successfully updated"),
             @ApiResponse(code = 404, message = "Organization to delete not found")
     })
-    @PutMapping(path="/{id}", produces = "application/json")
+    @PutMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<Organization> updateOrganization(@PathVariable(value = "id") String organizationId,
-                                                           @Valid @RequestBody Organization organization){
+                                                           @Valid @RequestBody Organization organization) {
         Optional<Organization> foundOrganization = organizationRepository.findById(organizationId);
-        if (foundOrganization.isPresent()){
+        if (foundOrganization.isPresent()) {
             Organization updatedOrganization = organizationRepository.save(organization);
             return new ResponseEntity<>(updatedOrganization, HttpStatus.OK);
         }
