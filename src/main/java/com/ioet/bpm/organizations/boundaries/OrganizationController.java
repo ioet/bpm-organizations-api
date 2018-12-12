@@ -25,7 +25,7 @@ public class OrganizationController {
 
     @ApiOperation(value = "Return a list of all organizations", response = Organization.class, responseContainer = "List")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Organizations succesfully returned")
+            @ApiResponse(code = 200, message = "Organizations successfully returned")
     })
     @GetMapping(produces = "application/json")
     public ResponseEntity<Iterable> getAllOrganizations() {
