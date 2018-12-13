@@ -1,4 +1,4 @@
-package com.ioet.bpm.bpmorganizationsapi.config;
+package com.ioet.bpm.organizations.config;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
@@ -8,7 +8,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.util.TableUtils;
-import com.ioet.bpm.bpmorganizationsapi.entities.Organization;
+import com.ioet.bpm.organizations.domain.Organization;
 import lombok.extern.slf4j.Slf4j;
 import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 import org.springframework.beans.factory.InitializingBean;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @Configuration
-@EnableDynamoDBRepositories(basePackages = "com.ioet.bpm.bpmorganizationsapi.repositories")
+@EnableDynamoDBRepositories(basePackages = "com.ioet.bpm.organizations.repositories")
 public class DynamoDBConfig {
 
     @Bean
@@ -42,7 +42,6 @@ public class DynamoDBConfig {
         return () -> {
             DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB);
 
-            // Alternatively, you can scan your model package for the DynamoDBTable annotation
             List<Class> modelClasses = new ArrayList<>();
             modelClasses.add(Organization.class);
 

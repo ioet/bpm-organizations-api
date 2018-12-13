@@ -1,4 +1,4 @@
-package com.ioet.bpm.bpmorganizationsapi.config;
+package com.ioet.bpm.organizations.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
