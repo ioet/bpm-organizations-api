@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BpmOrganizationsApiApplicationTests {
+public class OrganizationControllerTest {
 
     @Mock
     private OrganizationRepository organizationRepository;
