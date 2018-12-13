@@ -29,7 +29,6 @@ public class BpmOrganizationsApiApplicationTests {
     @InjectMocks
     private OrganizationController organizationController;
 
-
     @Test
     public void createOrganizationResponseSuccess() {
         Organization organizationCreated = mock(Organization.class);
@@ -41,7 +40,6 @@ public class BpmOrganizationsApiApplicationTests {
         assertEquals(HttpStatus.CREATED, organizationResponse.getStatusCode());
 
     }
-
 
     @Test
     public void testGetAllOrganizationsUseTheRepository() {
@@ -76,7 +74,6 @@ public class BpmOrganizationsApiApplicationTests {
 
         ResponseEntity response = organizationController.getOrganization(organizationFoundId);
 
-
         verify(organizationRepository).findById(organizationFoundId);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -87,7 +84,6 @@ public class BpmOrganizationsApiApplicationTests {
         when(organizationRepository.findById(id)).thenReturn(Optional.empty());
 
         ResponseEntity response = organizationController.getOrganization(id);
-
 
         verify(organizationRepository).findById(id);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -104,7 +100,7 @@ public class BpmOrganizationsApiApplicationTests {
     }
 
     @Test
-    public void whenAOrganizationIsDeletedAndIsFoundedThenReturnEmpty(){
+    public void whenAOrganizationIsDeletedAndIsFoundThenReturnEmpty(){
         String organizationIdToDelete = "id";
         Organization organizationToDelete = mock(Organization.class);
         when(organizationRepository.findById(organizationIdToDelete)).thenReturn(Optional.of(organizationToDelete));
@@ -118,7 +114,6 @@ public class BpmOrganizationsApiApplicationTests {
 
     @Test
     public void whenAOrganizationIsUpdatedThenReturn200() {
-
         Organization organizationToUpdate = mock(Organization.class);
         Organization organizationUpdated = mock(Organization.class);
         Optional<Organization> organizationFound = Optional.of(mock(Organization.class));
@@ -126,9 +121,7 @@ public class BpmOrganizationsApiApplicationTests {
         when(organizationRepository.findById(organizationFoundId)).thenReturn(organizationFound);
         when(organizationRepository.save(organizationToUpdate)).thenReturn(organizationUpdated);
 
-
         ResponseEntity<Organization> updatedOrganizationResponse = organizationController.updateOrganization(organizationFoundId, organizationToUpdate);
-
 
         assertEquals(HttpStatus.OK, updatedOrganizationResponse.getStatusCode());
         verify(organizationRepository).save(organizationToUpdate);
@@ -136,14 +129,12 @@ public class BpmOrganizationsApiApplicationTests {
 
     @Test
     public void whenANotFoundOrganizationIsUpdatedThenReturn400() {
-
         Organization organizationToUpdate = mock(Organization.class);
         when(organizationRepository.findById(Mockito.anyString())).thenReturn(Optional.empty());
 
         ResponseEntity<?> updatedOrganizationResponse = organizationController.updateOrganization(Mockito.anyString(), organizationToUpdate);
 
         assertEquals(HttpStatus.NOT_FOUND, updatedOrganizationResponse.getStatusCode());
-
         verify(organizationRepository).findById(Mockito.anyString());
     }
 }
