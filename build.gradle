@@ -60,7 +60,8 @@ test {
     jacoco {
         excludes += [
                 '**/config/**',
-                '**/BpmOrganizationsApiApplication.class'
+                '**/BpmOrganizationsApiApplication.class',
+                '**/aws/**'
         ]
     }
 }
@@ -72,7 +73,7 @@ jacocoTestReport {
     }
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['**/config/**', '**/BpmOrganizationsApiApplication.class'])
+            fileTree(dir: it, exclude: ['**/config/**', '**/BpmOrganizationsApiApplication.class', '**/aws/**'])
         })
     }
 }
@@ -87,4 +88,4 @@ task buildZip(type: Zip) {
     }
 }
 
-build.dependsOn buildZip 
+build.dependsOn buildZip
