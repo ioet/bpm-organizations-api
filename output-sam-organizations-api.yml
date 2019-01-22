@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: BpmOrganizations
+Outputs:
+  OrganizationsApi:
+    Description: URL for application
+    Export:
+      Name: OrganizationsApi
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Stage/organizations
+Resources:
+  OrganizationsApiLambda:
+    Properties:
+      CodeUri: s3://cf-template-spring-boot-apps-as-lambda/organizations-api/44a997a666616423fa16281948b5b1a8
+      Events:
+        GetResource:
+          Properties:
+            Method: any
+            Path: /{proxy+}
+          Type: Api
+      Handler: com.ioet.bpm.organizations.aws.handler.AwsLambdaHandler::handleRequest
+      MemorySize: 1512
+      Role: arn:aws:iam::524819651720:role/API-lambda-deployment
+      Runtime: java8
+      Timeout: 60
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
