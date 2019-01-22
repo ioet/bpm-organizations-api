@@ -89,10 +89,10 @@ aws cloudformation package --template-file sam-organizations-api.yml --output-te
 
 - Deploy the code to AWS
 ```
-aws cloudformation deploy --template-file output-sam-organizations-api.yml --stack-name spring-boot-lambda --capabilities CAPABILITY_IAM
+aws cloudformation deploy --template-file output-sam-organizations-api.yml --stack-name bpm-organizations-api --capabilities CAPABILITY_IAM
 ```
 
 - Get the URL
 ```
-aws cloudformation describe-stacks --stack-name spring-boot-lambda
+aws cloudformation describe-stacks --stack-name bpm-organizations-api
 ```
